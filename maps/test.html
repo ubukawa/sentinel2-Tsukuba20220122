@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Preview</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+  <script src="./L.Map.Sync.js"></script>
+  <style type="text/css">
+    html,body {
+       height: 100%;
+       margin: 0;
+       padding: 0;
+    }
+
+    #map_left{
+       float: left;
+       width: 49.8%;
+       height: 100%;
+    }
+
+    #map_right{
+       float: right;
+       width: 49.8%;
+       height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map_left"></div>
+  <div id="map_right"></div>
+  <script>
+     var m_2022 = new L.tileLayer('https://ubukawa.github.io/sentinel2-Tsukuba20220122/20220122/{z}/{x}/{y}.png', {
+       attribution: "Copernicus Sentinel data (2022, EUROPEAN COMMISSION) downloaded through U.S. Geological Survey EarthExplorer."
+     });
+
+     var m_2017 = new L.tileLayer('https://ubukawa.github.io/sentinel2-Tsukuba20170118/20170118/{z}/{x}/{y}.png', {
+       attribution: "Copernicus Sentinel data (2017, EUROPEAN COMMISSION)."
+     });
+
+var lat = 36.09824754241549;
+var lng = 140.49241202906757;
+
+var map_left = L.map('map_left', {
+    layers: [m_2022],
+    center: [lat, lng],
+    zoom: 10,
+    zoomControl: true
+});
+
+var map_right = L.map('map_right', {
+    layers: [m_2017],
+    center: [lat, lng],
+    zoom: 10,
+    zoomControl: true
+});
+
+
+map_left.sync(map_right, {syncCursor: true});
+map_right.sync(map_left, {syncCursor: true});
+
+
+  </script>
+</body>
+</html>
