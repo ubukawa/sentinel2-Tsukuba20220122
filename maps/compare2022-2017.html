@@ -1,0 +1,61 @@
+﻿<html>
+<head>
+<meta charset='utf-8' />
+<title>Five years since then (2022-01-22 and 2017-01-18)</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://ubukawa.github.io/VT-test-0614/mapbox-gl.js'></script>
+<link href='https://ubukawa.github.io/VT-test-0614/mapbox-gl.css' rel='stylesheet' />
+
+<style>
+body { margin:0; padding:0; }
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+ 
+<div id='container'></div>
+
+<script>
+var old = new mapboxgl.Map({
+  container: 'old', 
+  hash: true, 
+  style: 'https://ubukawa.github.io/sentinel2-Tsukuba20170118/maps/style.json'
+});
+
+var map = new mapboxgl.Map({
+  container: 'map', 
+  hash: true, 
+  style: 'https://ubukawa.github.io/sentinel2-Tsukuba20220122/maps/style.json', // style file path
+  center: [140.097347, 36.077851], // center [lng, lat]
+  zoom: 10, // zoom level at loading
+  maxZoom: 0, // min zoom
+  maxZoom: 18 // max zoom
+});
+
+var container = '#comparison-container';
+
+new mapboxgl.Compare(old, map, container, {
+  mousemove: true, // Optional. Set to true to enable swiping during cursor movement.
+  orientation: 'vertical' // Optional. Sets the orientation of swiper to horizontal or vertical, defaults to vertical
+});
+
+
+
+//UI
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+map.addControl(new mapboxgl.ScaleControl() );
+
+
+//debug
+map.showTileBoundaries = false;
+map.showCollisionBoxes = false;
+
+</script>
+ 
+</body>
+</html>
